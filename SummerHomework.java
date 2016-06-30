@@ -8,7 +8,7 @@
 */
 import java.util.*;
 
-public class HelloWorld {
+public class SummerHomework {
     public static void main(String[] args) {
         // Problem 1 (Easy)
         System.out.println(sumSquares(-100, 24));
