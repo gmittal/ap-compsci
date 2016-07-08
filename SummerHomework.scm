@@ -27,4 +27,13 @@
          (append (cdr lst) (list n))
          ) lst)
   )
+
+; Problem 5 (Medium)
+(define (safe-divider n)
+  (lambda(x)
+    (if (= x 0)
+        "cow"
+        (/ n x))
+    )
+  )
        
