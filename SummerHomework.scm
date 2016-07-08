@@ -5,14 +5,6 @@
 (define (factorial n)
 (if (= n 1) 1 (* (factorial (- n 1)) n)))
 
-(define (remove-elem xs elem)
-    (cond
-      ((null? ll) '())
-      ((eq? (car ll) elem) (cdr ll))
-       (else 
-        (cons (car ll) (remove-elem (cdr ll) elem))))
-    )
-
 ; Problem 2 (Medium)
 (define (odds lst)
   (length (apply append (map (lambda(n)
