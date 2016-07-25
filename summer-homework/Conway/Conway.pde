@@ -11,6 +11,7 @@
   Repeat.
 */
 
+// basic grid parameters
 int WIDTH = 400;
 int HEIGHT = 400;
 int CELL_WIDTH = 20;
@@ -20,6 +21,7 @@ int CELL_HEIGHT = 20;
 int[][] GRID = new int[WIDTH][HEIGHT];
 boolean running = false;
 
+// Set the stage
 void setup() 
 {
   size(400,400);
@@ -35,21 +37,25 @@ void setup()
 }
 
 
+// event loop (runs 60x per second)
 void draw() 
 {
   if (running == true) {
     conway();
-  }
-  
+  }  
   drawGrid();
 }
 
+
+// The actual Conway's Game of Life algorithm
 void conway()
 {
   for (int i = 0; i < WIDTH/10; i++) {
      for (int j = 0; j < HEIGHT/10; j++) {
+       // current cell state
        int currentState = GRID[i][j];
        
+       // Find the number of neighbors for each cell
        int neighborCount = 0;
        neighborCount += addNeighbor(i-1, j-1);
        neighborCount += addNeighbor(i-1, j);
@@ -60,6 +66,7 @@ void conway()
        neighborCount += addNeighbor(i+1, j);
        neighborCount += addNeighbor(i+1, j+1);
        
+       // The rules
        if (currentState == 0) {
           if (neighborCount == 3) {
              GRID[i][j] = 1; 
@@ -83,6 +90,7 @@ void conway()
 }
 
 
+// helper to get the number of neighbors of a cell
 int addNeighbor(int row, int col) {
   int n = 0;
    try {
@@ -97,10 +105,10 @@ int addNeighbor(int row, int col) {
 }
 
 
-// draw the grid display
+// draw the grid on the screen
 void drawGrid() 
 {
-  // No fourth argument means 100% opacity.
+  // visualize the 2D grid array data
   for (int i = 0; i < WIDTH/10; i++) {
     for (int j = 0; j < HEIGHT/10; j++) {
       fill(20*GRID[i][j]*100,40,200);
@@ -126,6 +134,7 @@ void mousePressed()
   drawGrid();
 }
 
+// start stop functionality
 void keyPressed()
 {
   if (running == true) {
