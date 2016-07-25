@@ -1,3 +1,16 @@
+// Conway's Game of Life
+// Written by Gautam Mittal
+// AP Computer Science 2015-2016
+
+/*
+  INSTRUCTIONS:
+  Draw some dots on the grid;
+  Press any key to start the game logic.
+  Watch the magic unfold.
+  Press any key to stop the magic.
+  Repeat.
+*/
+
 int WIDTH = 400;
 int HEIGHT = 400;
 int CELL_WIDTH = 20;
@@ -5,14 +18,14 @@ int CELL_HEIGHT = 20;
 
 // grid data structure
 int[][] GRID = new int[WIDTH][HEIGHT];
+boolean running = false;
 
 void setup() 
 {
   size(400,400);
   background(0);
   frameRate(60);
-  noLoop(); // initially don't start the Conway logic
-
+  
   // initialize the grid with zeros (if only numpy java)
   for (int i = 0; i < WIDTH/10; i++) {
     for (int j = 0; j < HEIGHT/10; j++) {
@@ -24,7 +37,10 @@ void setup()
 
 void draw() 
 {
-  conway();
+  if (running == true) {
+    conway();
+  }
+  
   drawGrid();
 }
 
@@ -112,5 +128,10 @@ void mousePressed()
 
 void keyPressed()
 {
+  if (running == true) {
+     running = false;
+  } else {
+    running = true;
+  }
   
 }
