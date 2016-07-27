@@ -29,8 +29,8 @@ void setup()
   frameRate(60);
   
   // initialize the grid with zeros (if only numpy java)
-  for (int i = 0; i < WIDTH/10; i++) {
-    for (int j = 0; j < HEIGHT/10; j++) {
+  for (int i = 0; i < WIDTH/CELL_WIDTH; i++) {
+    for (int j = 0; j < HEIGHT/CELL_HEIGHT; j++) {
        GRID[i][j] = 0; 
     }
   }
@@ -50,8 +50,8 @@ void draw()
 // The actual Conway's Game of Life algorithm
 void conway()
 {
-  for (int i = 0; i < WIDTH/10; i++) {
-     for (int j = 0; j < HEIGHT/10; j++) {
+  for (int i = 0; i < WIDTH/CELL_WIDTH; i++) {
+     for (int j = 0; j < HEIGHT/CELL_HEIGHT; j++) {
        // current cell state
        int currentState = GRID[i][j];
        
@@ -109,8 +109,8 @@ int addNeighbor(int row, int col) {
 void drawGrid() 
 {
   // visualize the 2D grid array data
-  for (int i = 0; i < WIDTH/10; i++) {
-    for (int j = 0; j < HEIGHT/10; j++) {
+  for (int i = 0; i < WIDTH/CELL_WIDTH; i++) {
+    for (int j = 0; j < HEIGHT/CELL_HEIGHT; j++) {
       fill(20*GRID[i][j]*100,40,200);
       rect(i*CELL_WIDTH, j*CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT);  
     }   
