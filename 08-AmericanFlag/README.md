@@ -3,3 +3,7 @@ Produce an American flag using Java as described by [Paleyontology's instruction
 
 ### Running the Code
 Import the project into a fairly recent version of Eclipse and hit the big green run button.
+
+### What Our Flag Looks Like
+Not particularly extraordinary.
+![Our Flag](https://puu.sh/qHrtc/77acfa807a.png)
