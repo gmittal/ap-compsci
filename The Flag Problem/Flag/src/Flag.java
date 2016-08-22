@@ -1,5 +1,7 @@
 
-// Aaron Schultz and Gautam Mittal
+/* Aaron Schultz
+ * Gautam Mittal
+ */
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -34,12 +36,13 @@ public class Flag extends JApplet {
 
 	// Helper function to generate stars
 	public void drawStar(int x, int y, double r, Graphics2D g) {
-		int[] xcoord = new int[10];
-		int[] ycoord = new int[10];
+		int starPoints = 5;
+		int[] xcoord = new int[starPoints * 2];
+		int[] ycoord = new int[starPoints * 2];
 
 		// Generate x and y coordinates to draw the star
 		for (int i = 0; i < xcoord.length; i++) {
-			double angle = Math.PI / 2.0 + i * Math.PI / 5.0;
+			double angle = Math.PI / 2.0 + i * Math.PI / starPoints;
 			if (i % 2 == 0) {
 				xcoord[i] = (int) (x + Math.cos(angle) * r);
 				ycoord[i] = (int) (y - Math.sin(angle) * r);
@@ -52,7 +55,7 @@ public class Flag extends JApplet {
 		}
 
 		g.setColor(AMERICAN_WHITE);
-		g.fillPolygon(xcoord, ycoord, 10);
+		g.fillPolygon(xcoord, ycoord, starPoints * 2);
 	}
 
 	// Draw the flag
