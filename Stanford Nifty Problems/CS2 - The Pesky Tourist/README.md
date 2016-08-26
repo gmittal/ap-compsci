@@ -1,0 +1,2 @@
+# The Pesky Tourist
+2014 Stanford Nifty Assignment involving a very nead 2D image manipulation using a median filter. The assignment specs can be found [here](http://nifty.stanford.edu/2014/nicholson-the-pesky-tourist/).
