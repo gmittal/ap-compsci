@@ -1,0 +1,34 @@
+SICP Problems 1.8, 1.9, 1.10, 1.14 (by hand)
+Gautam Mittal & Aaron Schultz
+
+Exercise 1.8:
+(define (cube x) (* x x x))
+
+(define (good-enough? guess x)
+  (< (abs (- (cube guess) x)) 0.00001))
+
+(define (improve guess x)
+   (/ (+ (/ x (* guess guess)) (* 2 guess)) 3))
+  
+(define (cbrt-iter guess x)
+  (if (good-enough? guess x)
+      guess
+      (cbrt-iter (improve guess x)
+                 x)))
+
+(define (cbrt x)
+  (cbrt-iter 1.0 x))
+      
+ 
+Exercise 1.9:
+The procedures are both recursive because the procedures call themselves. In both procedures, a is decremented by 1 while b is incremented by 1. When a hits 0, the sum is equal to b. In the first procedure, inc calls the procedure to through applicative-order evaluation, while in the second procedure, the procedure directly calls itself.
+
+
+Exercise 1.10:
+1024
+65536
+65536
+f computes 2n
+g computes 2^n
+h computes 2^(h n-1)
+k computes 5n^2
