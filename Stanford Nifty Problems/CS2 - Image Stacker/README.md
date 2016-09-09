@@ -1,0 +1,2 @@
+# Image Stacker
+2014 Stanford Nifty Assignment involving a very nead 2D image manipulation using a mean filter. The assignment specs can be found [here](http://nifty.stanford.edu/2014/nicholson-image-stacker/).
