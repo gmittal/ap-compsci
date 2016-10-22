@@ -1,4 +1,4 @@
 # Problem Sets
-Homework exercises taken from SICP textbook.
+Homework exercises completed from _Structure and Interpretation of Computer Programs_ textbook.
 
-(todo) elaborate on what these really are.
+Most of them are really interesting. Some are very challenging. It's not real homework, given that we complete most (if not all) of the work during class.
