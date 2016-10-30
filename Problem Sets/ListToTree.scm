@@ -31,7 +31,6 @@
 
 
 ; List to Tree Problems
-
 (define (first-n lyst n)
   (define (helper new lyst n c)
     (cond ((< c n) (helper (append new (list (car lyst))) (cdr lyst) n (+ c 1)))
