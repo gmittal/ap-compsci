@@ -6,6 +6,6 @@ This is mostly random snippets of Java and Scheme code written by someone who kn
 ![cs logo](http://paleyontology.com/alonzo_gunn.png)
 
 ### License
-As mentioned earlier, the course content comes from [Gunn High School](http://paleyontology.com). Thus, this (informal) license only applies to snippets of code that I have written. _To the trolls interested in copying code to cheat the class: don't do it._
+As mentioned earlier, the course content comes from [Gunn High School](http://paleyontology.com) as adapted from the Berkeley CS61A course. Thus, this (informal) license only applies to snippets of code that I have written. _To those interested in copying code to cheat in the class: don't do it._
 
-You can use my code for whatever you like, so long as you do not reuse it to cheat in your AP Computer Science class. I do not have any jurisdiction over the Gunn AP Computer Science course content. Those wishing to inquire about that should contact [the course instructor](http://paleyontology.com).
+You can use my code for whatever you like, so long as you do not reuse it to cheat in your AP Computer Science (or college introductory CS class??) class. I do not have any jurisdiction over the Gunn AP Computer Science course content. Those with inquiries regarding the curriculum should contact [the course instructor](http://paleyontology.com).
