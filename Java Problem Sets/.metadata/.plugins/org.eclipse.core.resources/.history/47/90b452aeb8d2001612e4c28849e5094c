@@ -7,6 +7,10 @@ public class weight implements structure {
 		this.w = w;
 	}
 
+	public double getWeight() {
+		return w;
+	}
+
 	@Override
 	public boolean isMobile() {
 		return false;
@@ -20,11 +24,6 @@ public class weight implements structure {
 	@Override
 	public boolean isBalanced() {
 		return true;
-	}
-
-	@Override
-	public double totalWeight() {
-		return w;
 	}
 
 }

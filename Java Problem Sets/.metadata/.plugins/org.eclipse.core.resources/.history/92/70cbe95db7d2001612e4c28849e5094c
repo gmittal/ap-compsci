@@ -1,10 +1,14 @@
 
 public class weight implements structure {
-
+	
 	private double w;
-
-	public weight(double w) {
-		this.w = w;
+	
+	public weight(double w){
+		this.w = w;	
+	}
+	
+	public double getWeight() {
+		return w;
 	}
 
 	@Override
@@ -20,11 +24,6 @@ public class weight implements structure {
 	@Override
 	public boolean isBalanced() {
 		return true;
-	}
-
-	@Override
-	public double totalWeight() {
-		return w;
 	}
 
 }
