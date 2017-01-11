@@ -1,2 +1,4 @@
 *.scm~
 *.md~
+.metadata
+.recommenders

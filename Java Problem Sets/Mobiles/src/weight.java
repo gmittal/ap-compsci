@@ -1,22 +1,30 @@
 
 public class weight implements structure {
 
+	private double w;
+
+	public weight(double w) {
+		this.w = w;
+	}
+
 	@Override
 	public boolean isMobile() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isWeight() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isBalanced() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
+	}
+
+	@Override
+	public double totalWeight() {
+		return w;
 	}
 
 }
