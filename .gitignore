@@ -2,3 +2,4 @@
 *.md~
 .metadata
 .recommenders
+.DS_Store
