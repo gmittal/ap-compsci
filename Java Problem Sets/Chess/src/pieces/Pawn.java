@@ -6,6 +6,11 @@ import board.Cell;
 
 public class Pawn extends Piece {
 
+	public Pawn(Cell l, boolean s) {
+		super(l, s);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public HashSet<Cell> getPossibleMoves() {
 		HashSet<Cell> possibleMoves = new HashSet<>();
