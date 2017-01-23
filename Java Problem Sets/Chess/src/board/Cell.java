@@ -31,7 +31,7 @@ public class Cell {
 		if ((x + y) % 2 == 0)
 			g.setColor(Color.WHITE);
 		else
-			g.setColor(Color.BLACK);
+			g.setColor(Color.GRAY);
 
 		g.fillRect(x * 64, y * 64, 64, 64);
 
