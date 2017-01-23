@@ -1,30 +1,41 @@
-import java.util.ArrayList;
 import java.util.Random;
 
 public class RandP {
 
-	private Random rand;
-	private ArrayList<Integer> validInts;
+	private int sampleSize;
+	private Random indexGen;
+	private int[] sample;
 
 	public RandP(int n) {
+		indexGen = new Random();		
+		sampleSize = n;
+		sample = new int[n];
 
-		rand = new Random();
-
-		validInts = new ArrayList<>();
-		for (int i = 1; i <= n; i++)
-			validInts.add(i);
-
+		for (int i = 0; i < n; i++)
+			sample[i] = i+1;
 	}
 
 	public int nextInt() {
-		if (validInts.isEmpty())
-			return 0;
-		else {
-			int index = rand.nextInt(validInts.size());
-			int r = validInts.get(index);
-			validInts.remove(index);
+		if (sampleSize > 0) {
+			/*
+			 * Pull a random number from the sample set given the sample size.
+			 * Return that number.
+			 * Set that object in the array to whatever number is at the end of the sample set.
+			 * Set the object at the end of the sample set to 0.
+			 * Reduce the sample size by one.
+			 * 
+			 * Diagram (if confusing): https://puu.sh/twe8R/eb86d02ccb.png
+			 */
+			
+			int index = indexGen.nextInt(sampleSize);
+			int r = sample[index];
+			sample[index] = sample[sampleSize-1];
+			sample[sampleSize-1] = 0;
+			sampleSize--;
 			return r;
-		}
+		} else
+			return 0;
+		
 	}
 
 }
