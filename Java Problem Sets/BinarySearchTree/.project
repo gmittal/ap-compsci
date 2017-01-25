@@ -3,6 +3,7 @@
 	<name>BinarySearchTree</name>
 	<comment></comment>
 	<projects>
+		<project>RandP</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
