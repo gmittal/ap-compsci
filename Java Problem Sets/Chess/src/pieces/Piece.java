@@ -43,6 +43,7 @@ public abstract class Piece {
 	public void draw(Graphics g) {
 
 		g.drawImage(img, location.x * 64 + 2, location.y * 64 + 2, null);
+
 	}
 
 }
