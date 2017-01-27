@@ -9,7 +9,6 @@ public class Main {
 		b.placePieces();
 
 		Window w = new Window(b);
-
 	}
 
 }
