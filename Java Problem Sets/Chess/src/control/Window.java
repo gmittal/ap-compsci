@@ -35,6 +35,10 @@ public class Window extends JPanel implements ActionListener, MouseListener {
 
 				System.out.println(x + ", " + y);
 
+				String currentCell = board.getCell(x, y).piece != null
+						? board.getCell(x, y).piece.getClass().getSimpleName() : "Empty";
+				System.out.println(currentCell);
+
 			}
 		});
 	}
