@@ -11,10 +11,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import board.Board;
+import pieces.Piece;
 
 public class Window extends JPanel implements ActionListener, MouseListener {
 
 	private Board board;
+	private Piece selectedPiece;
 
 	public Window(Board b) {
 
@@ -26,31 +28,35 @@ public class Window extends JPanel implements ActionListener, MouseListener {
 		setPreferredSize(new Dimension(512, 512));
 		f.pack();
 		f.setVisible(true);
-
-		/* Mouse input handler */
-		this.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				int x = evt.getX() / 64;
-				int y = evt.getY() / 64;
-
-				System.out.println(x + ", " + y);
-
-				String currentCell = board.getCell(x, y).piece != null
-						? board.getCell(x, y).piece.getClass().getSimpleName() : "Empty";
-				System.out.println(currentCell);
-
-			}
-		});
+		
+		addMouseListener(this);
 	}
 
 	public void paintComponent(Graphics g) {
 		board.draw(g);
+		
+		if (selectedPiece != null) {
+			
+		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		int x = e.getX() / 64;
+		int y = e.getY() / 64;
 
+		System.out.println(x + ", " + y);
+		
+		selectedPiece = board.getCell(x, y).piece;
+
+		String currentCell = selectedPiece != null
+				? (selectedPiece.side ? "Black " : "White ") + selectedPiece.getClass().getSimpleName() : "Empty";
+		System.out.println(currentCell);
+		
+		if (selectedPiece != null)
+		{
+			System.out.println(selectedPiece.getPossibleMoves().size());
+		}
 	}
 
 	@Override
