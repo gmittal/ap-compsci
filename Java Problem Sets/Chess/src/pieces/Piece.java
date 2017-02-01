@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import board.Board;
 import board.Cell;
+import control.Main;
 
 public abstract class Piece {
 
@@ -29,7 +30,7 @@ public abstract class Piece {
 	}
 
 	public Board getBoard() {
-		return location.board;
+		return Main.board;
 	}
 
 	public abstract HashSet<Cell> getPossibleMoves();
