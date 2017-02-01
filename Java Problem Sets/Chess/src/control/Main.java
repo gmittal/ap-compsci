@@ -9,6 +9,8 @@ public class Main {
 		b.placePieces();
 
 		Window w = new Window(b);
+		Network network = new Network(b);
+		System.out.println(network.getEncodedState()[0][0]);
 	}
 
 }
