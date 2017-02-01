@@ -17,33 +17,41 @@ public class Rook extends Piece {
 
 		for (int x = 1; x <= 7; x++) {
 			Cell c = getBoard().getCell(location.x + x, location.y);
-			if (c != null && !c.isSameSide(side))
+			if (c != null && !c.isSameSide(side)) {
 				possibleMoves.add(c);
-			else
+				if (c.piece != null && c.piece.side != side)
+					break;
+			} else
 				break;
 		}
 
 		for (int x = 1; x <= 7; x++) {
 			Cell c = getBoard().getCell(location.x - x, location.y);
-			if (c != null && !c.isSameSide(side))
+			if (c != null && !c.isSameSide(side)) {
 				possibleMoves.add(c);
-			else
+				if (c.piece != null && c.piece.side != side)
+					break;
+			} else
 				break;
 		}
 
 		for (int y = 1; y <= 7; y++) {
 			Cell c = getBoard().getCell(location.x, location.y + y);
-			if (c != null && !c.isSameSide(side))
+			if (c != null && !c.isSameSide(side)) {
 				possibleMoves.add(c);
-			else
+				if (c.piece != null && c.piece.side != side)
+					break;
+			} else
 				break;
 		}
 
 		for (int y = 1; y <= 7; y++) {
 			Cell c = getBoard().getCell(location.x, location.y - y);
-			if (c != null && !c.isSameSide(side))
+			if (c != null && !c.isSameSide(side)) {
 				possibleMoves.add(c);
-			else
+				if (c.piece != null && c.piece.side != side)
+					break;
+			} else
 				break;
 		}
 

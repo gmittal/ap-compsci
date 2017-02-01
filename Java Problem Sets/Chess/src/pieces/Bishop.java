@@ -17,33 +17,41 @@ public class Bishop extends Piece {
 
 		for (int i = 1; i <= 7; i++) {
 			Cell c = getBoard().getCell(location.x + i, location.y + i);
-			if (c != null && !c.isSameSide(side))
+			if (c != null && !c.isSameSide(side)) {
 				possibleMoves.add(c);
-			else
+				if (c.piece != null && c.piece.side != side)
+					break;
+			} else
 				break;
 		}
 
 		for (int i = 1; i <= 7; i++) {
 			Cell c = getBoard().getCell(location.x + i, location.y - i);
-			if (c != null && !c.isSameSide(side))
+			if (c != null && !c.isSameSide(side)) {
 				possibleMoves.add(c);
-			else
+				if (c.piece != null && c.piece.side != side)
+					break;
+			} else
 				break;
 		}
 
 		for (int i = 1; i <= 7; i++) {
 			Cell c = getBoard().getCell(location.x - i, location.y + i);
-			if (c != null && !c.isSameSide(side))
+			if (c != null && !c.isSameSide(side)) {
 				possibleMoves.add(c);
-			else
+				if (c.piece != null && c.piece.side != side)
+					break;
+			} else
 				break;
 		}
 
 		for (int i = 1; i <= 7; i++) {
 			Cell c = getBoard().getCell(location.x - i, location.y - i);
-			if (c != null && !c.isSameSide(side))
+			if (c != null && !c.isSameSide(side)) {
 				possibleMoves.add(c);
-			else
+				if (c.piece != null && c.piece.side != side)
+					break;
+			} else
 				break;
 		}
 
