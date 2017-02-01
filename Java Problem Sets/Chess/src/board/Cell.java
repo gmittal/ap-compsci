@@ -3,6 +3,7 @@ package board;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import control.Main;
 import pieces.Piece;
 
 public class Cell {
@@ -11,9 +12,9 @@ public class Cell {
 	public Piece piece;
 	public Board board;
 
-	public Cell(int x, int y, Board b) {
+	public Cell(int x, int y) {
 
-		board = b;
+		board = Main.board;
 		this.x = x;
 		this.y = y;
 		piece = null;
