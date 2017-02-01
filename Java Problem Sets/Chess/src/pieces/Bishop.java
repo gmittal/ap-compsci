@@ -15,7 +15,7 @@ public class Bishop extends Piece {
 	public HashSet<Cell> getPossibleMoves() {
 		HashSet<Cell> possibleMoves = new HashSet<>();
 
-		for (int i = 0; i <= 7; i++) {
+		for (int i = 1; i <= 7; i++) {
 			Cell c = getBoard().getCell(location.x + i, location.y + i);
 			if (c != null && !c.isSameSide(side))
 				possibleMoves.add(c);
@@ -23,7 +23,7 @@ public class Bishop extends Piece {
 				break;
 		}
 
-		for (int i = 0; i <= 7; i++) {
+		for (int i = 1; i <= 7; i++) {
 			Cell c = getBoard().getCell(location.x + i, location.y - i);
 			if (c != null && !c.isSameSide(side))
 				possibleMoves.add(c);
@@ -31,7 +31,7 @@ public class Bishop extends Piece {
 				break;
 		}
 
-		for (int i = 0; i <= 7; i++) {
+		for (int i = 1; i <= 7; i++) {
 			Cell c = getBoard().getCell(location.x - i, location.y + i);
 			if (c != null && !c.isSameSide(side))
 				possibleMoves.add(c);
@@ -39,7 +39,7 @@ public class Bishop extends Piece {
 				break;
 		}
 
-		for (int i = 0; i <= 7; i++) {
+		for (int i = 1; i <= 7; i++) {
 			Cell c = getBoard().getCell(location.x - i, location.y - i);
 			if (c != null && !c.isSameSide(side))
 				possibleMoves.add(c);

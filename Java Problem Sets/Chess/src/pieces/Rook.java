@@ -15,7 +15,7 @@ public class Rook extends Piece {
 	public HashSet<Cell> getPossibleMoves() {
 		HashSet<Cell> possibleMoves = new HashSet<>();
 
-		for (int x = 0; x <= 7; x++) {
+		for (int x = 1; x <= 7; x++) {
 			Cell c = getBoard().getCell(location.x + x, location.y);
 			if (c != null && !c.isSameSide(side))
 				possibleMoves.add(c);
@@ -23,7 +23,7 @@ public class Rook extends Piece {
 				break;
 		}
 
-		for (int x = 0; x <= 7; x++) {
+		for (int x = 1; x <= 7; x++) {
 			Cell c = getBoard().getCell(location.x - x, location.y);
 			if (c != null && !c.isSameSide(side))
 				possibleMoves.add(c);
@@ -31,7 +31,7 @@ public class Rook extends Piece {
 				break;
 		}
 
-		for (int y = 0; y <= 7; y++) {
+		for (int y = 1; y <= 7; y++) {
 			Cell c = getBoard().getCell(location.x, location.y + y);
 			if (c != null && !c.isSameSide(side))
 				possibleMoves.add(c);
@@ -39,7 +39,7 @@ public class Rook extends Piece {
 				break;
 		}
 
-		for (int y = 0; y <= 7; y++) {
+		for (int y = 1; y <= 7; y++) {
 			Cell c = getBoard().getCell(location.x, location.y - y);
 			if (c != null && !c.isSameSide(side))
 				possibleMoves.add(c);
