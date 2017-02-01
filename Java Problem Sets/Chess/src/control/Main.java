@@ -3,12 +3,15 @@ package control;
 import board.Board;
 
 public class Main {
+	
+	public static Board board;
+	public static Window window;
 
 	public static void main(String[] args) {
-		Board b = new Board();
-		b.placePieces();
+		board = new Board();
+		board.placePieces();
 
-		Window w = new Window(b);
+		window = new Window();
 	}
 
 }
