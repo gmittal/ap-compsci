@@ -3,7 +3,7 @@ package control;
 import board.Board;
 
 public class Main {
-	
+
 	public static Board board;
 	public static Window window;
 	public static GameConductor gc;
