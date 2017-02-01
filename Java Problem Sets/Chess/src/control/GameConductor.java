@@ -3,6 +3,7 @@ package control;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+
 import board.Board;
 import pieces.Piece;
 
@@ -10,7 +11,8 @@ public class GameConductor implements MouseListener{
 	
 	public Board board;
 	public Piece selectedPiece;
-	
+	public Network network = new Network();
+  
 	public GameConductor() {
 		board = Main.board;
 	}
@@ -31,30 +33,31 @@ public class GameConductor implements MouseListener{
 		
 		Main.window.repaint();
 		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
