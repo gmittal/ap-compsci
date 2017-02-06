@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 
@@ -35,10 +36,30 @@ public abstract class Piece {
 
 	public abstract HashSet<Cell> getPossibleMoves();
 
+	public abstract HashSet<Cell> getPossibleMovesWithoutCheck();
+
+	public void removeIllegalMoves(HashSet<Cell> possibleMoves) {
+		Iterator<Cell> iter = possibleMoves.iterator();
+
+		while (iter.hasNext()) {
+			Cell c = iter.next();
+			if (!Main.gc.isMoveLegal(this, c))
+				iter.remove();
+
+		}
+	}
+
 	public void move(Cell c) {
 		location.piece = null;
+		if (c.piece != null)
+			c.piece.taken();
 		c.piece = this;
 		location = c;
+	}
+
+	public void taken() {
+		location.piece = null;
+		(side ? Main.gc.blackPieces : Main.gc.whitePieces).remove(this);
 	}
 
 	public void draw(Graphics g) {

@@ -40,6 +40,40 @@ public class Knight extends Piece {
 		if (c != null && !c.isSameSide(side))
 			possibleMoves.add(c);
 
+		removeIllegalMoves(possibleMoves);
+
+		return possibleMoves;
+	}
+
+	@Override
+	public HashSet<Cell> getPossibleMovesWithoutCheck() {
+		HashSet<Cell> possibleMoves = new HashSet<>();
+
+		Cell c = getBoard().getCell(location.x + 2, location.y + 1);
+		if (c != null && !c.isSameSide(side))
+			possibleMoves.add(c);
+		c = getBoard().getCell(location.x + 2, location.y - 1);
+		if (c != null && !c.isSameSide(side))
+			possibleMoves.add(c);
+		c = getBoard().getCell(location.x - 2, location.y + 1);
+		if (c != null && !c.isSameSide(side))
+			possibleMoves.add(c);
+		c = getBoard().getCell(location.x - 2, location.y - 1);
+		if (c != null && !c.isSameSide(side))
+			possibleMoves.add(c);
+		c = getBoard().getCell(location.x + 1, location.y + 2);
+		if (c != null && !c.isSameSide(side))
+			possibleMoves.add(c);
+		c = getBoard().getCell(location.x + 1, location.y - 2);
+		if (c != null && !c.isSameSide(side))
+			possibleMoves.add(c);
+		c = getBoard().getCell(location.x - 1, location.y + 2);
+		if (c != null && !c.isSameSide(side))
+			possibleMoves.add(c);
+		c = getBoard().getCell(location.x - 1, location.y - 2);
+		if (c != null && !c.isSameSide(side))
+			possibleMoves.add(c);
+
 		return possibleMoves;
 	}
 
