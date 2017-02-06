@@ -1,8 +1,10 @@
 package pieces;
 
 import java.util.HashSet;
+import java.util.Iterator;
 
 import board.Cell;
+import control.Main;
 
 public class King extends Piece {
 
@@ -13,6 +15,29 @@ public class King extends Piece {
 
 	@Override
 	public HashSet<Cell> getPossibleMoves() {
+		HashSet<Cell> possibleMoves = new HashSet<>();
+
+		for (int x = -1; x <= 1; x++)
+			for (int y = -1; y <= 1; y++) {
+				Cell c = getBoard().getCell(location.x + x, location.y + y);
+				if (c != null && !c.isSameSide(side))
+					possibleMoves.add(c);
+			}
+
+		Iterator<Cell> iter = possibleMoves.iterator();
+		HashSet<Cell> opponentMoves = Main.gc.getAllMoves(!side);
+
+		while (iter.hasNext()) {
+			Cell c = iter.next();
+			if (opponentMoves.contains(c))
+				iter.remove();
+
+		}
+
+		return possibleMoves;
+	}
+
+	public HashSet<Cell> getPossibleMovesWithoutCheck() {
 		HashSet<Cell> possibleMoves = new HashSet<>();
 
 		for (int x = -1; x <= 1; x++)
