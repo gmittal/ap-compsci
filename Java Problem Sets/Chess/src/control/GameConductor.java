@@ -2,6 +2,7 @@ package control;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.HashSet;
 
 import board.Board;
@@ -40,7 +41,12 @@ public class GameConductor implements MouseListener {
 			selectedPiece = board.getCell(x, y).piece;
 
 		Main.window.repaint();
-		network.sendLocalChange(); // tell the Network that something happened
+		try {
+			network.sendLocalChange();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} // tell the Network that something happened
 
 	}
 
