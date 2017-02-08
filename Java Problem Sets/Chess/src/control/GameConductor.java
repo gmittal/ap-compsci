@@ -7,20 +7,32 @@ import java.util.HashSet;
 
 import board.Board;
 import board.Cell;
-import pieces.King;
 import pieces.Piece;
 
 public class GameConductor implements MouseListener {
 
 	public Board board;
-	public Piece selectedPiece;
+	public Piece selectedPiece, whiteKing, blackKing;
 	public Network network = new Network();
 	public boolean side;
+	public HashSet<Piece> whitePieces, blackPieces;
 
 	public GameConductor() {
 		board = Main.board;
+		whitePieces = new HashSet<>();
+		blackPieces = new HashSet<>();
 		side = false;
 		network.updateState();
+	}
+
+	private void nextTurn() {
+		selectedPiece = null;
+		side = !side;
+		isGameOver();
+		Main.window.f.setTitle("Chess - " + (side ? "Black's " : "White's ") + "Move");
+		Main.window.repaint();
+		network.sendLocalChange(); // tell the Network that something happened
+
 	}
 
 	@Override
@@ -30,40 +42,68 @@ public class GameConductor implements MouseListener {
 
 		if (selectedPiece != null && selectedPiece.getPossibleMoves().contains(board.getCell(x, y))) {
 			selectedPiece.move(board.getCell(x, y));
-			selectedPiece = null;
-			side = !side;
-			Main.window.f.setTitle("Chess - " + (side ? "Black's " : "White's ") + "Move");
-			Main.window.repaint();
-			return;
+			nextTurn();
 		}
 
 		if (board.getCell(x, y).piece != null && board.getCell(x, y).piece.side == side)
 			selectedPiece = board.getCell(x, y).piece;
 
 		Main.window.repaint();
-		try {
-			network.sendLocalChange();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} // tell the Network that something happened
+
+
+	}
+
+	public HashSet<Cell> getAllMovesWithoutCheck(boolean s) {
+		HashSet<Cell> moves = new HashSet<>();
+
+		for (Piece p : (s ? blackPieces : whitePieces))
+			moves.addAll(p.getPossibleMovesWithoutCheck());
+
+		return moves;
+
 
 	}
 
 	public HashSet<Cell> getAllMoves(boolean s) {
 		HashSet<Cell> moves = new HashSet<>();
 
-		for (Cell[] col : board.cells)
-			for (Cell c : col) {
-				if (c.piece != null && c.piece.side == s)
-					if (!(c.piece instanceof King))
-						moves.addAll(c.piece.getPossibleMoves());
-					else {
-						moves.addAll(((King) c.piece).getPossibleMovesWithoutCheck());
-					}
-			}
+		for (Piece p : (s ? blackPieces : whitePieces))
+			moves.addAll(p.getPossibleMoves());
 
 		return moves;
+
+	}
+
+	public boolean isMoveLegal(Piece p, Cell c) {
+		Cell oldCell = p.location;
+		Piece oldPiece = c.piece;
+
+		p.move(c);
+
+		boolean legal = isBoardLegal();
+
+		p.move(oldCell);
+		c.piece = oldPiece;
+		if (oldPiece != null)
+			(oldPiece.side ? Main.gc.blackPieces : Main.gc.whitePieces).add(oldPiece);
+
+		return legal;
+	}
+
+	public boolean isBoardLegal() {
+
+		return side ? !getAllMovesWithoutCheck(false).contains(blackKing.location)
+				: !getAllMovesWithoutCheck(true).contains(whiteKing.location);
+	}
+
+	public boolean isGameOver() {
+		boolean over = false;
+
+		if ((side ? getAllMovesWithoutCheck(false).contains(blackKing.location)
+				: getAllMovesWithoutCheck(true).contains(whiteKing.location)) && !getAllMoves(side).isEmpty())
+			System.out.println("Game Over");
+
+		return over;
 	}
 
 	@Override
