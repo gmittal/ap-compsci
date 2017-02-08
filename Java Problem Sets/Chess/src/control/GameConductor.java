@@ -60,6 +60,10 @@ public class GameConductor implements MouseListener {
 
 	}
 
+	private void executeNotationMove(String move) {
+		move.
+	}
+
 	public HashSet<Cell> getAllMovesWithoutCheck(boolean s) {
 		HashSet<Cell> moves = new HashSet<>();
 
@@ -119,6 +123,10 @@ public class GameConductor implements MouseListener {
 
 	private String getChessNotation(Cell c) {
 		return notation[c.x] + Integer.toString(8 - c.y);
+	}
+
+	private Cell notationToCell(String s) {
+		return board.getCell(s.substring(0, 0), s.substring(1, 1));
 	}
 
 	@Override
