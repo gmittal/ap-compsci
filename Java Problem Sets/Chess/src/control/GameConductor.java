@@ -24,7 +24,6 @@ public class GameConductor implements MouseListener {
 		whitePieces = new HashSet<>();
 		blackPieces = new HashSet<>();
 		side = false;
-		network.updateState();
 	}
 
 	private void nextTurn() {
@@ -33,12 +32,6 @@ public class GameConductor implements MouseListener {
 		isGameOver();
 		Main.window.f.setTitle("Chess - " + (side ? "Black's " : "White's ") + "Move");
 		Main.window.repaint();
-		try {
-			network.sendLocalChange();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} // tell the Network that something happened
 
 	}
 
@@ -48,6 +41,13 @@ public class GameConductor implements MouseListener {
 		int y = e.getY() / 64;
 
 		if (selectedPiece != null && selectedPiece.getPossibleMoves().contains(board.getCell(x, y))) {
+			try {
+				network.sendLocalChange((side ? "Black " : "White ") + selectedPiece.getClass().getSimpleName() + " "
+						+ getChessNotation(selectedPiece.location) + " " + getChessNotation(board.getCell(x, y)));
+			} catch (IOException ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+			} // tell the Network that something happened
 			selectedPiece.move(board.getCell(x, y));
 			nextTurn();
 		}
