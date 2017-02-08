@@ -17,13 +17,14 @@ public class Pawn extends Piece {
 
 		if (side) {
 			Cell c = getBoard().getCell(location.x, location.y + 1);
-			if (c != null && c.piece == null)
+			if (c != null && c.piece == null) {
 				possibleMoves.add(c);
 
-			if (location.y == 1) {
-				c = getBoard().getCell(location.x, location.y + 2);
-				if (c != null && c.piece == null)
-					possibleMoves.add(c);
+				if (location.y == 1) {
+					c = getBoard().getCell(location.x, location.y + 2);
+					if (c != null && c.piece == null)
+						possibleMoves.add(c);
+				}
 			}
 
 			c = getBoard().getCell(location.x + 1, location.y + 1);
@@ -36,13 +37,14 @@ public class Pawn extends Piece {
 
 		} else {
 			Cell c = getBoard().getCell(location.x, location.y - 1);
-			if (c != null && c.piece == null)
+			if (c != null && c.piece == null) {
 				possibleMoves.add(c);
 
-			if (location.y == 6) {
-				c = getBoard().getCell(location.x, location.y - 2);
-				if (c != null && c.piece == null)
-					possibleMoves.add(c);
+				if (location.y == 6) {
+					c = getBoard().getCell(location.x, location.y - 2);
+					if (c != null && c.piece == null)
+						possibleMoves.add(c);
+				}
 			}
 
 			c = getBoard().getCell(location.x + 1, location.y - 1);
