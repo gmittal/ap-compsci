@@ -1,10 +1,8 @@
 package pieces;
 
 import java.util.HashSet;
-import java.util.Iterator;
 
 import board.Cell;
-import control.Main;
 
 public class King extends Piece {
 
@@ -24,15 +22,7 @@ public class King extends Piece {
 					possibleMoves.add(c);
 			}
 
-		Iterator<Cell> iter = possibleMoves.iterator();
-		HashSet<Cell> opponentMoves = Main.gc.getAllMoves(!side);
-
-		while (iter.hasNext()) {
-			Cell c = iter.next();
-			if (opponentMoves.contains(c))
-				iter.remove();
-
-		}
+		removeIllegalMoves(possibleMoves);
 
 		return possibleMoves;
 	}

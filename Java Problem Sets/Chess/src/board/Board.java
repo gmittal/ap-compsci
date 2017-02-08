@@ -2,6 +2,7 @@ package board;
 
 import java.awt.Graphics;
 
+import control.Main;
 import pieces.Bishop;
 import pieces.King;
 import pieces.Knight;
@@ -55,6 +56,17 @@ public class Board {
 		cells[5][7].piece = new Bishop(cells[5][7], false);
 		cells[6][7].piece = new Knight(cells[6][7], false);
 		cells[7][7].piece = new Rook(cells[7][7], false);
+
+		for (int x = 0; x <= 7; x++) {
+			Main.gc.blackPieces.add(cells[x][0].piece);
+			Main.gc.blackPieces.add(cells[x][1].piece);
+			Main.gc.whitePieces.add(cells[x][7].piece);
+			Main.gc.whitePieces.add(cells[x][6].piece);
+		}
+
+		Main.gc.blackKing = cells[4][0].piece;
+		Main.gc.whiteKing = cells[4][7].piece;
+
 	}
 
 	public void draw(Graphics g) {

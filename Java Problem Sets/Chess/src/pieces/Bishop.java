@@ -55,6 +55,55 @@ public class Bishop extends Piece {
 				break;
 		}
 
+		removeIllegalMoves(possibleMoves);
+
+		return possibleMoves;
+	}
+
+	@Override
+	public HashSet<Cell> getPossibleMovesWithoutCheck() {
+		HashSet<Cell> possibleMoves = new HashSet<>();
+
+		for (int i = 1; i <= 7; i++) {
+			Cell c = getBoard().getCell(location.x + i, location.y + i);
+			if (c != null && !c.isSameSide(side)) {
+				possibleMoves.add(c);
+				if (c.piece != null && c.piece.side != side)
+					break;
+			} else
+				break;
+		}
+
+		for (int i = 1; i <= 7; i++) {
+			Cell c = getBoard().getCell(location.x + i, location.y - i);
+			if (c != null && !c.isSameSide(side)) {
+				possibleMoves.add(c);
+				if (c.piece != null && c.piece.side != side)
+					break;
+			} else
+				break;
+		}
+
+		for (int i = 1; i <= 7; i++) {
+			Cell c = getBoard().getCell(location.x - i, location.y + i);
+			if (c != null && !c.isSameSide(side)) {
+				possibleMoves.add(c);
+				if (c.piece != null && c.piece.side != side)
+					break;
+			} else
+				break;
+		}
+
+		for (int i = 1; i <= 7; i++) {
+			Cell c = getBoard().getCell(location.x - i, location.y - i);
+			if (c != null && !c.isSameSide(side)) {
+				possibleMoves.add(c);
+				if (c.piece != null && c.piece.side != side)
+					break;
+			} else
+				break;
+		}
+
 		return possibleMoves;
 	}
 
