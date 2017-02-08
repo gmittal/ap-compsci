@@ -11,7 +11,7 @@ import board.Board;
 
 public class Network {
 	/* Populate these variables on multiplayer startup */
-	public static String HOST = "http://c409f780.ngrok.io/games";
+	public static String HOST = "http://5ee8a1bb.ngrok.io/games";
 	public static int GAME_PIN = 1234;
 
 	private HashMap<String, Integer> ids = new HashMap<>();
@@ -25,6 +25,9 @@ public class Network {
 
 	public void sendLocalChange(String move) throws IOException {
 
+		state.add(move);
+		System.out.println(state.toString());
+
 		URL url = new URL(HOST);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("PUT");
@@ -32,7 +35,7 @@ public class Network {
 		connection.setRequestProperty("Content-Type", "application/json");
 		connection.setRequestProperty("Accept", "application/json");
 		OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
-		osw.write(String.format("{\"" + GAME_PIN + "\":%s}", "Hello"));
+		osw.write(String.format("{\"" + GAME_PIN + "\":%s}", state.toString()));
 		osw.flush();
 		osw.close();
 		System.err.println(connection.getResponseCode());
