@@ -4,11 +4,10 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import board.Board;
-import pieces.Piece;
 
 public class Network {
 	/* Populate these variables on multiplayer startup */
@@ -17,41 +16,14 @@ public class Network {
 
 	private HashMap<String, Integer> ids = new HashMap<>();
 
-	public static String[][] state;
+	public static ArrayList<String> state;
 	public Board board = Main.board;
 
 	public Network() {
-		state = new String[8][8];
-		updateState();
+		state = new ArrayList<>();
 	}
 
-	public String[][] updateState() {
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				Piece selectedPiece = board.getCell(i, j).piece;
-				String cellID = selectedPiece != null
-						? (selectedPiece.side ? "Black " : "White ") + selectedPiece.getClass().getSimpleName()
-						: "Empty";
-				state[i][j] = cellID;
-			}
-		}
-
-		return state;
-	}
-
-	private String StateToString(Object[][] array) {
-		String line = ",";
-		StringBuilder sb = new StringBuilder();
-
-		for (Object[] row : array) {
-			sb.append(Arrays.toString(row)).append(line);
-		}
-
-		return "[" + sb.toString().substring(0, sb.toString().length() - 1) + "]";
-	}
-
-	public void sendLocalChange() throws IOException {
-		updateState();
+	public void sendLocalChange(String move) throws IOException {
 
 		URL url = new URL(HOST);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -60,12 +32,7 @@ public class Network {
 		connection.setRequestProperty("Content-Type", "application/json");
 		connection.setRequestProperty("Accept", "application/json");
 		OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
-		System.out.println(String.format("{\"" + GAME_PIN + "\":%s}", StateToString(state)));
-		/*
-		 * the above does not currently work because each of the individual
-		 * objects need to be wrapped in quotes.
-		 */
-		osw.write(String.format("{\"" + GAME_PIN + "\":%s}", StateToString(state)));
+		osw.write(String.format("{\"" + GAME_PIN + "\":%s}", "Hello"));
 		osw.flush();
 		osw.close();
 		System.err.println(connection.getResponseCode());
