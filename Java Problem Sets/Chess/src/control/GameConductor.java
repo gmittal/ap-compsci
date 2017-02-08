@@ -16,9 +16,11 @@ public class GameConductor implements MouseListener {
 	public Network network = new Network();
 	public boolean side;
 	public HashSet<Piece> whitePieces, blackPieces;
+	private String[] notation;
 
 	public GameConductor() {
 		board = Main.board;
+		notation = new String[] { "a", "b", "c", "d", "e", "f", "g", "h" };
 		whitePieces = new HashSet<>();
 		blackPieces = new HashSet<>();
 		side = false;
@@ -31,7 +33,12 @@ public class GameConductor implements MouseListener {
 		isGameOver();
 		Main.window.f.setTitle("Chess - " + (side ? "Black's " : "White's ") + "Move");
 		Main.window.repaint();
-		network.sendLocalChange(); // tell the Network that something happened
+		try {
+			network.sendLocalChange();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // tell the Network that something happened
 
 	}
 
@@ -50,7 +57,6 @@ public class GameConductor implements MouseListener {
 
 		Main.window.repaint();
 
-
 	}
 
 	public HashSet<Cell> getAllMovesWithoutCheck(boolean s) {
@@ -60,7 +66,6 @@ public class GameConductor implements MouseListener {
 			moves.addAll(p.getPossibleMovesWithoutCheck());
 
 		return moves;
-
 
 	}
 
@@ -97,13 +102,22 @@ public class GameConductor implements MouseListener {
 	}
 
 	public boolean isGameOver() {
-		boolean over = false;
 
 		if ((side ? getAllMovesWithoutCheck(false).contains(blackKing.location)
-				: getAllMovesWithoutCheck(true).contains(whiteKing.location)) && !getAllMoves(side).isEmpty())
-			System.out.println("Game Over");
+				: getAllMovesWithoutCheck(true).contains(whiteKing.location)) && getAllMoves(side).isEmpty()) {
+			System.out.println("Checkmate");
+			return true;
+		}
+		if (getAllMoves(side).isEmpty()) {
+			System.out.println("Stalemate");
+			return true;
+		}
 
-		return over;
+		return false;
+	}
+
+	private String getChessNotation(Cell c) {
+		return notation[c.x] + Integer.toString(8 - c.y);
 	}
 
 	@Override
