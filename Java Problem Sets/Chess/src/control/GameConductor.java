@@ -2,6 +2,7 @@ package control;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.HashSet;
 
 import board.Board;
@@ -49,6 +50,7 @@ public class GameConductor implements MouseListener {
 
 		Main.window.repaint();
 
+
 	}
 
 	public HashSet<Cell> getAllMovesWithoutCheck(boolean s) {
@@ -58,6 +60,7 @@ public class GameConductor implements MouseListener {
 			moves.addAll(p.getPossibleMovesWithoutCheck());
 
 		return moves;
+
 
 	}
 
