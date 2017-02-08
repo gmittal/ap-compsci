@@ -42,8 +42,9 @@ public class GameConductor implements MouseListener {
 
 		if (selectedPiece != null && selectedPiece.getPossibleMoves().contains(board.getCell(x, y))) {
 			try {
-				network.sendLocalChange((side ? "Black " : "White ") + selectedPiece.getClass().getSimpleName() + " "
-						+ getChessNotation(selectedPiece.location) + " " + getChessNotation(board.getCell(x, y)));
+				network.sendLocalChange("\"" + (side ? "Black " : "White ") + selectedPiece.getClass().getSimpleName()
+						+ " " + getChessNotation(selectedPiece.location) + " " + getChessNotation(board.getCell(x, y))
+						+ "\"");
 			} catch (IOException ex) {
 				// TODO Auto-generated catch block
 				ex.printStackTrace();
