@@ -2,18 +2,22 @@ package control;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import board.Board;
 
 public class Network {
-	/* Populate these variables on multiplayer startup */
-	public static String HOST = "http://5ee8a1bb.ngrok.io/games";
-	public static int GAME_PIN = 1234;
+	/* Populate these variables on multi-player startup */
+	public static final String HOST = "http://gautam.cc:9000/games";
+	public static String GAME_PIN = "1234";
 
 	private HashMap<String, Integer> ids = new HashMap<>();
 
@@ -43,22 +47,26 @@ public class Network {
 
 	}
 
-	public void listenForNetworkChange() {
+	public void listenForNetworkChange() throws IOException, JSONException {
 		/*
 		 * Keep pulling the JSON data and listen for a change --> do something
 		 */
-		
-		  StringBuilder result = new StringBuilder();
-	      URL url = new URL(urlToRead);
-	      HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	      conn.setRequestMethod("GET");
-	      BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-	      String line;
-	      while ((line = rd.readLine()) != null) {
-	         result.append(line);
-	      }
-	      rd.close();
-	      System.out.println(result.toString());
+
+		StringBuilder result = new StringBuilder();
+		URL url = new URL(HOST);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		String line;
+		while ((line = rd.readLine()) != null) {
+			result.append(line);
+		}
+		rd.close();
+
+		JSONObject obj = new JSONObject(result.toString());
+		JSONObject arr = obj.optJSONObject(GAME_PIN);
+		System.out.println(arr);
+
 	}
 
 }

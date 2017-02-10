@@ -5,6 +5,8 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.HashSet;
 
+import org.json.JSONException;
+
 import board.Board;
 import board.Cell;
 import pieces.Piece;
@@ -24,6 +26,18 @@ public class GameConductor implements MouseListener {
 		whitePieces = new HashSet<>();
 		blackPieces = new HashSet<>();
 		side = false;
+
+		try {
+			try {
+				network.listenForNetworkChange();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void nextTurn() {
@@ -61,7 +75,7 @@ public class GameConductor implements MouseListener {
 	}
 
 	private void executeNotationMove(String move) {
-		move.
+
 	}
 
 	public HashSet<Cell> getAllMovesWithoutCheck(boolean s) {
@@ -126,7 +140,10 @@ public class GameConductor implements MouseListener {
 	}
 
 	private Cell notationToCell(String s) {
-		return board.getCell(s.substring(0, 0), s.substring(1, 1));
+
+		/* Need to fix substring */
+		// return board.getCell(s.substring(0, 0), s.substring(1, 1));
+		return board.getCell(0, 0);
 	}
 
 	@Override
