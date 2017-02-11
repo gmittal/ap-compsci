@@ -3,6 +3,7 @@ package control;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.json.JSONException;
@@ -26,20 +27,38 @@ public class GameConductor implements MouseListener {
 		whitePieces = new HashSet<>();
 		blackPieces = new HashSet<>();
 		side = false;
+		
+		Thread t = new Thread(new Runnable() {
+		    public void run() {
+		    	try {
+					try {
+						ArrayList<String> pull = network.listenForNetworkChange();
+						if (pull.size() != network.state.size()) {
+							System.out.println("Network interface detected change.");
+							network.state = pull; 
+							updateHandler();
+						}
+						
+						
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		});
 
-		try {
-			try {
-				network.listenForNetworkChange();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		t.start();
+		
 	}
 
+	private void updateHandler() {
+		System.out.println("GameConductor should do something in response to network change here.");
+	}
+	
 	private void nextTurn() {
 		selectedPiece = null;
 		side = !side;
