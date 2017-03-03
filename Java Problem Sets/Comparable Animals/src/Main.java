@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import sort.QuickSort;
 
 public class Main {
 
@@ -10,7 +10,7 @@ public class Main {
 		for (Animal a : animals) {
 			a.eat(200);
 		}
-		Arrays.sort(animals);
+		QuickSort.sort(animals);
 		printArray(animals);
 	}
 

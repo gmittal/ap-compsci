@@ -3,6 +3,7 @@
 	<name>Comparable Animals</name>
 	<comment></comment>
 	<projects>
+		<project>Sorting</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
