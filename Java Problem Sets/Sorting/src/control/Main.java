@@ -2,7 +2,7 @@ package control;
 
 import java.util.Arrays;
 
-import sort.QuickSort;
+import sort.HeapSort;
 
 public class Main {
 
@@ -14,9 +14,7 @@ public class Main {
 
 		System.out.println(Arrays.toString(a));
 
-		System.out.println(QuickSort.median(a, 0, a.length - 1));
-
-		QuickSort.sort(a);
+		HeapSort.sort(a);
 
 		System.out.println(Arrays.toString(a));
 
