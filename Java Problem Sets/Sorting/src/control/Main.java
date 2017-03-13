@@ -2,7 +2,7 @@ package control;
 
 import java.util.Arrays;
 
-import sort.HeapSort;
+import sort.MergeSort;
 
 public class Main {
 
@@ -14,7 +14,7 @@ public class Main {
 
 		System.out.println(Arrays.toString(a));
 
-		HeapSort.sort(a);
+		MergeSort.sort(a);
 
 		System.out.println(Arrays.toString(a));
 
