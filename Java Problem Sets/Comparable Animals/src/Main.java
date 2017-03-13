@@ -1,4 +1,4 @@
-import sort.QuickSort;
+import sort.MergeSort;
 
 public class Main {
 
@@ -10,7 +10,7 @@ public class Main {
 		for (Animal a : animals) {
 			a.eat(200);
 		}
-		QuickSort.sort(animals);
+		MergeSort.sort(animals);
 		printArray(animals);
 	}
 

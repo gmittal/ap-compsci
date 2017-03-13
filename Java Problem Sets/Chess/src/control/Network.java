@@ -27,7 +27,7 @@ public class Network {
 
 	public Network() {
 		state = new ArrayList<>();
-		
+
 		try {
 			URL url = new URL(HOST);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -40,10 +40,10 @@ public class Network {
 			osw.flush();
 			osw.close();
 			System.err.println(connection.getResponseCode());
-		} catch (IOException e)  {
+		} catch (IOException e) {
 			System.out.println(e);
 		}
-		
+
 	}
 
 	public void sendLocalChange(String move) throws IOException {
@@ -82,7 +82,7 @@ public class Network {
 		for (int i = 0; i < obj.length(); i++) {
 			cloud.add(obj.getString(i));
 		}
-		
+
 		return cloud;
 
 	}

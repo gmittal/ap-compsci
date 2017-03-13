@@ -13,7 +13,7 @@ public class HeapSort extends Sort {
 
 	}
 
-	public static <T extends Comparable<T>> void maxHeap(T[] a) {
+	private static <T extends Comparable<T>> void maxHeap(T[] a) {
 
 		for (int i = a.length - 1; i >= 0; i--) {
 			trickleDown(a, i, a.length - 1);
@@ -21,7 +21,7 @@ public class HeapSort extends Sort {
 
 	}
 
-	public static <T extends Comparable<T>> void trickleDown(T[] a, int dataPos, int end) {
+	private static <T extends Comparable<T>> void trickleDown(T[] a, int dataPos, int end) {
 
 		if ((2 * dataPos + 1 <= end) && (a[dataPos].compareTo(a[2 * dataPos + 1]) < 0)) {
 
