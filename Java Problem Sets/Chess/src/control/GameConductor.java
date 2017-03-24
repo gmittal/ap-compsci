@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 import org.json.JSONException;
@@ -17,7 +18,7 @@ public class GameConductor implements MouseListener {
 	public Board board;
 	public Piece selectedPiece, whiteKing, blackKing;
 	public Network network = new Network();
-	public boolean side;
+	public boolean side, mySide;
 	public HashSet<Piece> whitePieces, blackPieces;
 	private String[] notation;
 
@@ -26,20 +27,20 @@ public class GameConductor implements MouseListener {
 		notation = new String[] { "a", "b", "c", "d", "e", "f", "g", "h" };
 		whitePieces = new HashSet<>();
 		blackPieces = new HashSet<>();
+		mySide = false;
 		side = false;
-		
+
 		Thread t = new Thread(new Runnable() {
-		    public void run() {
-		    	try {
+			public void run() {
+				try {
 					try {
 						ArrayList<String> pull = network.listenForNetworkChange();
 						if (pull.size() != network.state.size()) {
 							System.out.println("Network interface detected change.");
-							network.state = pull; 
+							network.state = pull;
 							updateHandler();
 						}
-						
-						
+
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -48,17 +49,46 @@ public class GameConductor implements MouseListener {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		    }
+			}
 		});
 
 		t.start();
-		
+
 	}
 
 	private void updateHandler() {
-		System.out.println("GameConductor should do something in response to network change here.");
+		executeNotationMove(network.state.get(network.state.size() - 1));
+		nextTurn();
 	}
-	
+
+	private void startListening() {
+		Thread t = new Thread(new Runnable() {
+			public void run() {
+				listen: while (true)
+					try {
+						try {
+							ArrayList<String> pull = network.listenForNetworkChange();
+							if (pull.size() == network.state.size() + 1) {
+								System.out.println("Network interface detected change.");
+								network.state = pull;
+								updateHandler();
+								break listen;
+							}
+
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+		});
+
+		t.start();
+	}
+
 	private void nextTurn() {
 		selectedPiece = null;
 		side = !side;
@@ -84,9 +114,10 @@ public class GameConductor implements MouseListener {
 			} // tell the Network that something happened
 			selectedPiece.move(board.getCell(x, y));
 			nextTurn();
+			startListening();
 		}
 
-		if (board.getCell(x, y).piece != null && board.getCell(x, y).piece.side == side)
+		if (board.getCell(x, y).piece != null && board.getCell(x, y).piece.side == side && side == mySide)
 			selectedPiece = board.getCell(x, y).piece;
 
 		Main.window.repaint();
@@ -94,6 +125,8 @@ public class GameConductor implements MouseListener {
 	}
 
 	private void executeNotationMove(String move) {
+
+		String[] parts = move.split(" ");
 
 	}
 
@@ -160,9 +193,8 @@ public class GameConductor implements MouseListener {
 
 	private Cell notationToCell(String s) {
 
-		/* Need to fix substring */
-		// return board.getCell(s.substring(0, 0), s.substring(1, 1));
-		return board.getCell(0, 0);
+		String[] parts = s.split("");
+		return board.getCell(Arrays.asList(notation).indexOf(parts[0]), 8 - Integer.parseInt(parts[1]));
 	}
 
 	@Override
