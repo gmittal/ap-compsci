@@ -7,5 +7,6 @@
 	<classpathentry kind="src" path="projects/triangleBug"/>
 	<classpathentry kind="lib" path="gridworld.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="lifeBug"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
