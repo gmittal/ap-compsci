@@ -30,30 +30,6 @@ public class GameConductor implements MouseListener {
 		mySide = false;
 		side = false;
 
-		Thread t = new Thread(new Runnable() {
-			public void run() {
-				try {
-					try {
-						ArrayList<String> pull = network.listenForNetworkChange();
-						if (pull.size() != network.state.size()) {
-							System.out.println("Network interface detected change.");
-							network.state = pull;
-							updateHandler();
-						}
-
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-
-		t.start();
-
 	}
 
 	private void updateHandler() {
@@ -61,7 +37,7 @@ public class GameConductor implements MouseListener {
 		nextTurn();
 	}
 
-	private void startListening() {
+	public void startListening() {
 		Thread t = new Thread(new Runnable() {
 			public void run() {
 				listen: while (true)
@@ -129,7 +105,6 @@ public class GameConductor implements MouseListener {
 		String[] parts = move.split(" ");
 		Piece movedPiece = notationToCell(parts[2]).piece;
 		movedPiece.move(notationToCell(parts[3]));
-		nextTurn();
 
 	}
 
