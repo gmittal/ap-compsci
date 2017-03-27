@@ -46,7 +46,7 @@ public class GameConductor implements MouseListener {
 							ArrayList<String> pull = network.listenForNetworkChange();
 							if (pull.size() == network.state.size() + 1) {
 								System.out.println("Network interface detected change.");
-								network.state = pull;
+								network.state.add('"' + pull.get(pull.size() - 1) + '"');
 								updateHandler();
 								break listen;
 							}
