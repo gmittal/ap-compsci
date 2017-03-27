@@ -127,6 +127,9 @@ public class GameConductor implements MouseListener {
 	private void executeNotationMove(String move) {
 
 		String[] parts = move.split(" ");
+		Piece movedPiece = notationToCell(parts[2]).piece;
+		movedPiece.move(notationToCell(parts[3]));
+		nextTurn();
 
 	}
 
