@@ -75,7 +75,7 @@ public class GameConductor implements MouseListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
+	public void mousePressed(MouseEvent e) {
 		int x = e.getX() / 64;
 		int y = e.getY() / 64;
 
@@ -176,7 +176,7 @@ public class GameConductor implements MouseListener {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
+	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
