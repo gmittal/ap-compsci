@@ -23,7 +23,7 @@ public abstract class Piece {
 		location = l;
 		side = s;
 		try {
-			img = ImageIO.read(new File(System.getProperty("user.dir") + "/src/Piece Images/"
+			img = ImageIO.read(getClass().getResource("/Piece Images/"
 					+ (side ? "Black" : "White") + this.getClass().getSimpleName() + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
