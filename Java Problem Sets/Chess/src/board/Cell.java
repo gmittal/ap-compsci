@@ -30,9 +30,9 @@ public class Cell {
 
 	public void draw(Graphics g) {
 		if ((x + y) % 2 == 0)
-			g.setColor(Color.WHITE);
+			g.setColor(new Color(255, 206, 158));
 		else
-			g.setColor(Color.GRAY);
+			g.setColor(new Color(178, 118, 60));
 
 		g.fillRect(x * 64, y * 64, 64, 64);
 

@@ -30,30 +30,6 @@ public class GameConductor implements MouseListener {
 		mySide = false;
 		side = false;
 
-		Thread t = new Thread(new Runnable() {
-			public void run() {
-				try {
-					try {
-						ArrayList<String> pull = network.listenForNetworkChange();
-						if (pull.size() != network.state.size()) {
-							System.out.println("Network interface detected change.");
-							network.state = pull;
-							updateHandler();
-						}
-
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-
-		t.start();
-
 	}
 
 	private void updateHandler() {
@@ -61,7 +37,7 @@ public class GameConductor implements MouseListener {
 		nextTurn();
 	}
 
-	private void startListening() {
+	public void startListening() {
 		Thread t = new Thread(new Runnable() {
 			public void run() {
 				listen: while (true)
@@ -70,7 +46,7 @@ public class GameConductor implements MouseListener {
 							ArrayList<String> pull = network.listenForNetworkChange();
 							if (pull.size() == network.state.size() + 1) {
 								System.out.println("Network interface detected change.");
-								network.state = pull;
+								network.state.add('"' + pull.get(pull.size() - 1) + '"');
 								updateHandler();
 								break listen;
 							}
@@ -99,7 +75,7 @@ public class GameConductor implements MouseListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
+	public void mousePressed(MouseEvent e) {
 		int x = e.getX() / 64;
 		int y = e.getY() / 64;
 
@@ -127,6 +103,8 @@ public class GameConductor implements MouseListener {
 	private void executeNotationMove(String move) {
 
 		String[] parts = move.split(" ");
+		Piece movedPiece = notationToCell(parts[2]).piece;
+		movedPiece.move(notationToCell(parts[3]));
 
 	}
 
@@ -198,7 +176,7 @@ public class GameConductor implements MouseListener {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
+	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}

@@ -14,6 +14,8 @@ public class Main {
 		board.placePieces();
 		window = new Window();
 		gc.mySide = false;
+		if (gc.mySide == true)
+			gc.startListening();
 	}
 
 }
