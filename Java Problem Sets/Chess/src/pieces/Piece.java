@@ -2,7 +2,6 @@ package pieces;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -23,8 +22,8 @@ public abstract class Piece {
 		location = l;
 		side = s;
 		try {
-			img = ImageIO.read(getClass().getResource("/Piece Images/"
-					+ (side ? "Black" : "White") + this.getClass().getSimpleName() + ".png"));
+			img = ImageIO.read(getClass().getResource(
+					"/Piece Images/" + (side ? "Black" : "White") + this.getClass().getSimpleName() + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -50,6 +49,7 @@ public abstract class Piece {
 	}
 
 	public void move(Cell c) {
+
 		location.piece = null;
 		if (c.piece != null)
 			c.piece.taken();

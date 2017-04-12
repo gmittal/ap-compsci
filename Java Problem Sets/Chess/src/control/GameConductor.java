@@ -11,6 +11,7 @@ import org.json.JSONException;
 
 import board.Board;
 import board.Cell;
+import pieces.King;
 import pieces.Piece;
 
 public class GameConductor implements MouseListener {
@@ -78,17 +79,29 @@ public class GameConductor implements MouseListener {
 	public void mousePressed(MouseEvent e) {
 		int x = e.getX() / 64;
 		int y = e.getY() / 64;
+		Cell c = board.getCell(x, y);
 
-		if (selectedPiece != null && selectedPiece.getPossibleMoves().contains(board.getCell(x, y))) {
+		if (selectedPiece != null && selectedPiece.getPossibleMoves().contains(c)) {
 			try {
 				network.sendLocalChange("\"" + (side ? "Black " : "White ") + selectedPiece.getClass().getSimpleName()
-						+ " " + getChessNotation(selectedPiece.location) + " " + getChessNotation(board.getCell(x, y))
-						+ "\"");
+						+ " " + getChessNotation(selectedPiece.location) + " " + getChessNotation(c) + "\"");
 			} catch (IOException ex) {
 				// TODO Auto-generated catch block
 				ex.printStackTrace();
 			} // tell the Network that something happened
-			selectedPiece.move(board.getCell(x, y));
+
+			if (selectedPiece instanceof King) {
+				if (c.x - selectedPiece.location.x == 2) {
+					board.getCell(selectedPiece.location.x + 3, selectedPiece.location.y).piece
+							.move(board.getCell(selectedPiece.location.x + 1, selectedPiece.location.y));
+				} else if (c.x - selectedPiece.location.x == -2) {
+					board.getCell(selectedPiece.location.x - 4, selectedPiece.location.y).piece
+							.move(board.getCell(selectedPiece.location.x - 1, selectedPiece.location.y));
+				}
+			}
+
+			selectedPiece.move(c);
+
 			nextTurn();
 			startListening();
 		}
@@ -104,6 +117,15 @@ public class GameConductor implements MouseListener {
 
 		String[] parts = move.split(" ");
 		Piece movedPiece = notationToCell(parts[2]).piece;
+		if (movedPiece instanceof King) {
+			if (notationToCell(parts[3]).x - movedPiece.location.x == 2) {
+				board.getCell(movedPiece.location.x + 3, movedPiece.location.y).piece
+						.move(board.getCell(movedPiece.location.x + 1, movedPiece.location.y));
+			} else if (notationToCell(parts[3]).x - movedPiece.location.x == -2) {
+				board.getCell(movedPiece.location.x - 4, movedPiece.location.y).piece
+						.move(board.getCell(movedPiece.location.x - 1, movedPiece.location.y));
+			}
+		}
 		movedPiece.move(notationToCell(parts[3]));
 
 	}
@@ -169,7 +191,7 @@ public class GameConductor implements MouseListener {
 		return notation[c.x] + Integer.toString(8 - c.y);
 	}
 
-	private Cell notationToCell(String s) {
+	public Cell notationToCell(String s) {
 
 		String[] parts = s.split("");
 		return board.getCell(Arrays.asList(notation).indexOf(parts[0]), 8 - Integer.parseInt(parts[1]));
