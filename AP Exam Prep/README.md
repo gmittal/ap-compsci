@@ -1,0 +1,2 @@
+# 2017 AP Computer Science Exam
+Here are some resources that were used to prepare for the boring 2017 AP Computer Science Exam. In particular, our class used [Be Prepared for the AP Computer Science Exam in Java (6th edition)](https://www.amazon.com/Prepared-Computer-Science-Exam-Java/dp/0982477538/ref=pd_lpo_sbs_14_t_0?_encoding=UTF8&psc=1&refRID=T6HQ595C1TP4JH7JZB18) as our study guide.
