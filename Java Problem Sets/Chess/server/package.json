@@ -12,6 +12,8 @@
   "author": "Gautam Mittal and Aaron Schultz",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.3",
     "json-server": "^0.9.4"
   }
 }
