@@ -1,12 +1,10 @@
 /* Really really hacky server --- great for small stuff */
 
-var bodyParser = require('body-parser')
 var express = require('express')
 var exec = require('child_process').exec
 var fs = require('fs')
 
 var app = express()
-app.use(bodyParser())
 
 var C_PORT = 1134
 
