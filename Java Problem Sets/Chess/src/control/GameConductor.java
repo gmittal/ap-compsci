@@ -37,22 +37,25 @@ public class GameConductor implements MouseListener {
 
 	private int determinePin() {
 		Object[] answer = { "New Game", "Join Game" };
-		int input = JOptionPane.showOptionDialog(null, "Start a new game or join an existing one", "Start game",
+		int input = JOptionPane.showOptionDialog(null, "Start a new game or join an existing one", "Start Game",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, answer, answer[0]);
 		if (input == JOptionPane.YES_OPTION) {
 			try {
 				int pin = Network.startNewGame();
-				JOptionPane.showMessageDialog(null, "Your game pin is " + pin, "Start game",
+				JOptionPane.showMessageDialog(null, "Your game pin is " + pin + ". You will play as White.", "Start Game",
 						JOptionPane.INFORMATION_MESSAGE, null);
 				mySide = false;
 				return pin;
 			} catch (IOException e) {
 				e.printStackTrace();
+				System.exit(0);
 			}
 		} else if (input == JOptionPane.NO_OPTION) {
 			mySide = true;
 			return Integer.parseInt(
-					JOptionPane.showInputDialog(null, "Enter pin", "Start game", JOptionPane.PLAIN_MESSAGE), 10);
+					JOptionPane.showInputDialog(null, "Enter pin. You will play as Black.", "Start Game", JOptionPane.PLAIN_MESSAGE), 10);
+		} else {
+			System.exit(0);
 		}
 
 		return 0;
@@ -71,7 +74,7 @@ public class GameConductor implements MouseListener {
 						try {
 							ArrayList<String> pull = network.listenForNetworkChange();
 							if (pull.size() == network.state.size() + 1) {
-								System.out.println("Network interface detected change.");
+//								System.out.println("Network interface detected change.");
 								network.state.add('"' + pull.get(pull.size() - 1) + '"');
 								updateHandler();
 								break listen;
@@ -95,7 +98,7 @@ public class GameConductor implements MouseListener {
 		selectedPiece = null;
 		side = !side;
 		isGameOver();
-		Main.window.f.setTitle("Chess - " + (side ? "Black's " : "White's ") + "Move    Pin:" + network.GAME_PIN);
+		Main.window.f.setTitle("Chess - " + (side ? "Black's " : "White's ") + "Move [" + network.GAME_PIN + "]");
 		Main.window.repaint();
 
 	}
