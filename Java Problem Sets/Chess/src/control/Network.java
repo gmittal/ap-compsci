@@ -17,7 +17,7 @@ import board.Board;
 
 public class Network {
 	/* Populate these variables on multi-player startup */
-	public static final String HOST = "http://localhost";
+	public static final String HOST = "http://gautam.cc";
 	public static int GAME_PIN = 1134;
 
 	private HashMap<String, Integer> ids = new HashMap<>();
