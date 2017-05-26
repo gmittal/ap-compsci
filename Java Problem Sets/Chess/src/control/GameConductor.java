@@ -125,6 +125,8 @@ public class GameConductor implements MouseListener {
 				}
 			}
 
+			// TODO add en passant stuff
+
 			selectedPiece.move(c);
 
 			nextTurn();

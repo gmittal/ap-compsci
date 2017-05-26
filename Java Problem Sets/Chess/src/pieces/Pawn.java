@@ -109,6 +109,8 @@ public class Pawn extends Piece {
 
 		}
 
+		addEnPassant(possibleMoves);
+
 		return possibleMoves;
 	}
 
@@ -120,14 +122,26 @@ public class Pawn extends Piece {
 
 		if (!parts[1].equals("Pawn"))
 			return;
-
-		if ((Main.gc.notationToCell(parts[3]) == getBoard().getCell(location.x + 1, location.y))
-				&& (Main.gc.notationToCell(parts[3]) == getBoard().getCell(location.x + 1, location.y - 2))) {
-			possibleMoves.add(getBoard().getCell(location.x + 1, location.y - 1));
+		if (side == false) {
+			if ((Main.gc.notationToCell(parts[3]) == getBoard().getCell(location.x + 1, location.y))
+					&& (Main.gc.notationToCell(parts[2]) == getBoard().getCell(location.x + 1, location.y - 2))) {
+				possibleMoves.add(getBoard().getCell(location.x + 1, location.y - 1));
+			}
+			if ((Main.gc.notationToCell(parts[3]) == getBoard().getCell(location.x - 1, location.y))
+					&& (Main.gc.notationToCell(parts[2]) == getBoard().getCell(location.x - 1, location.y - 2))) {
+				possibleMoves.add(getBoard().getCell(location.x - 1, location.y - 1));
+			}
 		}
-		if ((Main.gc.notationToCell(parts[3]) == getBoard().getCell(location.x - 1, location.y))
-				&& (Main.gc.notationToCell(parts[3]) == getBoard().getCell(location.x - 1, location.y - 2))) {
-			possibleMoves.add(getBoard().getCell(location.x - 1, location.y - 1));
+
+		if (side == true) {
+			if ((Main.gc.notationToCell(parts[3]) == getBoard().getCell(location.x + 1, location.y))
+					&& (Main.gc.notationToCell(parts[2]) == getBoard().getCell(location.x + 1, location.y + 2))) {
+				possibleMoves.add(getBoard().getCell(location.x + 1, location.y + 1));
+			}
+			if ((Main.gc.notationToCell(parts[3]) == getBoard().getCell(location.x - 1, location.y))
+					&& (Main.gc.notationToCell(parts[2]) == getBoard().getCell(location.x - 1, location.y + 2))) {
+				possibleMoves.add(getBoard().getCell(location.x - 1, location.y + 1));
+			}
 		}
 	}
 
