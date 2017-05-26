@@ -13,7 +13,6 @@ public class Main {
 		gc = new GameConductor();
 		board.placePieces();
 		window = new Window();
-		gc.mySide = true;
 		if (gc.mySide == true)
 			gc.startListening();
 	}

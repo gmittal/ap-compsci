@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import javax.swing.JOptionPane;
+
 import org.json.JSONException;
 
 import board.Board;
@@ -18,19 +20,42 @@ public class GameConductor implements MouseListener {
 
 	public Board board;
 	public Piece selectedPiece, whiteKing, blackKing;
-	public Network network = new Network();
+	public Network network;
 	public boolean side, mySide;
 	public HashSet<Piece> whitePieces, blackPieces;
 	private String[] notation;
 
 	public GameConductor() {
 		board = Main.board;
+		network = new Network(determinePin());
 		notation = new String[] { "a", "b", "c", "d", "e", "f", "g", "h" };
 		whitePieces = new HashSet<>();
 		blackPieces = new HashSet<>();
-		mySide = false;
 		side = false;
 
+	}
+
+	private int determinePin() {
+		Object[] answer = { "New Game", "Join Game" };
+		int input = JOptionPane.showOptionDialog(null, "Start a new game or join an existing one", "Start game",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, answer, answer[0]);
+		if (input == JOptionPane.YES_OPTION) {
+			try {
+				int pin = Network.startNewGame();
+				JOptionPane.showMessageDialog(null, "Your game pin is " + pin, "Start game",
+						JOptionPane.INFORMATION_MESSAGE, null);
+				mySide = false;
+				return pin;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else if (input == JOptionPane.NO_OPTION) {
+			mySide = true;
+			return Integer.parseInt(
+					JOptionPane.showInputDialog(null, "Enter pin", "Start game", JOptionPane.PLAIN_MESSAGE), 10);
+		}
+
+		return 0;
 	}
 
 	private void updateHandler() {
@@ -70,7 +95,7 @@ public class GameConductor implements MouseListener {
 		selectedPiece = null;
 		side = !side;
 		isGameOver();
-		Main.window.f.setTitle("Chess - " + (side ? "Black's " : "White's ") + "Move");
+		Main.window.f.setTitle("Chess - " + (side ? "Black's " : "White's ") + "Move    Pin:" + network.GAME_PIN);
 		Main.window.repaint();
 
 	}
