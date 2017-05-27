@@ -13,8 +13,13 @@ import org.json.JSONException;
 
 import board.Board;
 import board.Cell;
+import pieces.Bishop;
 import pieces.King;
+import pieces.Knight;
+import pieces.Pawn;
 import pieces.Piece;
+import pieces.Queen;
+import pieces.Rook;
 
 public class GameConductor implements MouseListener {
 
@@ -27,7 +32,11 @@ public class GameConductor implements MouseListener {
 
 	public GameConductor() {
 		board = Main.board;
-		network = new Network(determinePin());
+		int pin = determinePin();
+		if (pin != -1)
+			network = new Network(pin);
+		else 
+			network = new LocalNetwork();
 		notation = new String[] { "a", "b", "c", "d", "e", "f", "g", "h" };
 		whitePieces = new HashSet<>();
 		blackPieces = new HashSet<>();
@@ -36,9 +45,9 @@ public class GameConductor implements MouseListener {
 	}
 
 	private int determinePin() {
-		Object[] answer = { "New Game", "Join Game" };
+		Object[] answer = { "New Game", "Join Game", "Local Game" };
 		int input = JOptionPane.showOptionDialog(null, "Start a new game or join an existing one", "Start game",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, answer, answer[0]);
+				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, answer, answer[0]);
 		if (input == JOptionPane.YES_OPTION) {
 			try {
 				int pin = Network.startNewGame();
@@ -54,8 +63,9 @@ public class GameConductor implements MouseListener {
 			return Integer.parseInt(
 					JOptionPane.showInputDialog(null, "Enter pin", "Start game", JOptionPane.PLAIN_MESSAGE), 10);
 		}
-
-		return 0;
+		
+		return -1;
+		
 	}
 
 	private void updateHandler() {
@@ -124,16 +134,45 @@ public class GameConductor implements MouseListener {
 							.move(board.getCell(selectedPiece.location.x - 1, selectedPiece.location.y));
 				}
 			}
-
-			// TODO add en passant stuff
+			
+			if (selectedPiece instanceof Pawn) {
+				if (c.x-selectedPiece.location.x != 0 && c.piece == null)
+					board.getCell(c.x, selectedPiece.location.y).piece.taken();
+			}
 
 			selectedPiece.move(c);
+			
+			if (selectedPiece instanceof Pawn) {
+				if (c.y == 0 || c.y == 7) {
+					Object[] options = {"Queen", "Rook", "Knight", "Bishop"};
+					int input = JOptionPane.showOptionDialog(null, "What would you like to promote your pawn to?", "Pawn Promotion", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+					switch (input) {
+					case 0:
+						selectedPiece.taken();
+						c.piece = new Queen(c, selectedPiece.side);
+						break;
+					case 1:
+						selectedPiece.taken();
+						c.piece = new Rook(c, selectedPiece.side);
+						break;
+					case 2:
+						selectedPiece.taken();
+						c.piece = new Knight(c, selectedPiece.side);
+						break;
+					case 3:
+						selectedPiece.taken();
+						c.piece = new Bishop(c, selectedPiece.side);
+						break;						
+					}
+					(selectedPiece.side ? blackPieces : whitePieces).add(c.piece);
+				}
+			}
 
 			nextTurn();
 			startListening();
 		}
 
-		if (board.getCell(x, y).piece != null && board.getCell(x, y).piece.side == side && side == mySide)
+		if (board.getCell(x, y).piece != null && board.getCell(x, y).piece.side == side && (side == mySide || network instanceof LocalNetwork))
 			selectedPiece = board.getCell(x, y).piece;
 
 		Main.window.repaint();
@@ -153,7 +192,38 @@ public class GameConductor implements MouseListener {
 						.move(board.getCell(movedPiece.location.x - 1, movedPiece.location.y));
 			}
 		}
+		if (movedPiece instanceof Pawn) {
+			if (notationToCell(parts[3]).x-movedPiece.location.x != 0 && notationToCell(parts[3]).piece == null)
+				board.getCell(notationToCell(parts[3]).x, movedPiece.location.y).piece.taken();
+		}
+		
 		movedPiece.move(notationToCell(parts[3]));
+		
+		if (movedPiece instanceof Pawn) {
+			if (notationToCell(parts[3]).y == 0 || notationToCell(parts[3]).y == 7) {
+				Object[] options = {"Queen", "Rook", "Knight", "Bishop"};
+				int input = JOptionPane.showOptionDialog(null, "What would you like to promote your pawn to?", "Pawn Promotion", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+				switch (input) {
+				case 0:
+					movedPiece.taken();
+					notationToCell(parts[3]).piece = new Queen(notationToCell(parts[3]), movedPiece.side);
+					break;
+				case 1:
+					movedPiece.taken();
+					notationToCell(parts[3]).piece = new Rook(notationToCell(parts[3]), movedPiece.side);
+					break;
+				case 2:
+					movedPiece.taken();
+					notationToCell(parts[3]).piece = new Knight(notationToCell(parts[3]), movedPiece.side);
+					break;
+				case 3:
+					movedPiece.taken();
+					notationToCell(parts[3]).piece = new Bishop(notationToCell(parts[3]), movedPiece.side);
+					break;						
+				}
+				(movedPiece.side ? blackPieces : whitePieces).add(notationToCell(parts[3]).piece);
+			}
+		}
 
 	}
 

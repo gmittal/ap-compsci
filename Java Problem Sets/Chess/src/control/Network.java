@@ -50,6 +50,10 @@ public class Network {
 		}
 
 	}
+	
+	public Network() {
+		state = new ArrayList<>();
+	}
 
 	public static int startNewGame() throws IOException {
 		URL url = new URL(HOST + ":9000/new");
