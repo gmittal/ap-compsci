@@ -64,7 +64,9 @@ public class GameConductor implements MouseListener {
 			mySide = true;
 			return Integer.parseInt(
 					JOptionPane.showInputDialog(null, "Enter pin. You will play as Black.", "Start Game", JOptionPane.PLAIN_MESSAGE), 10);
-		} else {
+		} else if (input == JOptionPane.CANCEL_OPTION) {
+			return -1;
+		}else {
 			System.exit(0);
 		}
 		
