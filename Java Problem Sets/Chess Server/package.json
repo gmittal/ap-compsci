@@ -2,7 +2,7 @@
   "name": "chess-server",
   "version": "1.0.0",
   "description": "A multiplayer handler for our AP CS Chess game.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,6 +12,7 @@
   "author": "Gautam Mittal and Aaron Schultz",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "json-server": "^0.9.4"
   }

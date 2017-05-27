@@ -20,7 +20,7 @@ public class Window extends JPanel {
 
 		board = Main.board;
 
-		f = new JFrame("Chess - White's Move    Pin:" + Main.gc.network.GAME_PIN);
+		f = new JFrame("Chess - White's Move [" + Main.gc.network.GAME_PIN + "]");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.add(this);
 		setPreferredSize(new Dimension(512, 512));
