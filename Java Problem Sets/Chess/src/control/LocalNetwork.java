@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class LocalNetwork extends Network{
 
 	public LocalNetwork() {
-		
+		GAME_PIN = "local";
 	}
 	
 	public void sendLocalChange(String move) {

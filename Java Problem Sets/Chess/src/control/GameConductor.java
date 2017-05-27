@@ -123,13 +123,6 @@ public class GameConductor implements MouseListener {
 		Cell c = board.getCell(x, y);
 
 		if (selectedPiece != null && selectedPiece.getPossibleMoves().contains(c)) {
-			try {
-				network.sendLocalChange("\"" + (side ? "Black " : "White ") + selectedPiece.getClass().getSimpleName()
-						+ " " + getChessNotation(selectedPiece.location) + " " + getChessNotation(c) + "\"");
-			} catch (IOException ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
-			} // tell the Network that something happened
 
 			if (selectedPiece instanceof King) {
 				if (c.x - selectedPiece.location.x == 2) {
@@ -145,11 +138,11 @@ public class GameConductor implements MouseListener {
 				if (c.x-selectedPiece.location.x != 0 && c.piece == null)
 					board.getCell(c.x, selectedPiece.location.y).piece.taken();
 			}
-
+			
+			Cell previousLocation = selectedPiece.location;
 			selectedPiece.move(c);
 			
-			if (selectedPiece instanceof Pawn) {
-				if (c.y == 0 || c.y == 7) {
+			if (selectedPiece instanceof Pawn && (c.y == 0 || c.y == 7)) {
 					Object[] options = {"Queen", "Rook", "Knight", "Bishop"};
 					int input = JOptionPane.showOptionDialog(null, "What would you like to promote your pawn to?", "Pawn Promotion", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 					switch (input) {
@@ -171,8 +164,25 @@ public class GameConductor implements MouseListener {
 						break;						
 					}
 					(selectedPiece.side ? blackPieces : whitePieces).add(c.piece);
+					
+					try {
+						network.sendLocalChange("\"" + (side ? "Black " : "White ") + selectedPiece.getClass().getSimpleName()
+								+ " " + getChessNotation(previousLocation) + " " + getChessNotation(c) + " "+ c.piece.getClass().getSimpleName()+"\"");
+					} catch (IOException ex) {
+						// TODO Auto-generated catch block
+						ex.printStackTrace();
+					} // tell the Network that something happened
+					
+				} else {
+					try {
+						network.sendLocalChange("\"" + (side ? "Black " : "White ") + selectedPiece.getClass().getSimpleName()
+								+ " " + getChessNotation(previousLocation) + " " + getChessNotation(c) + "\"");
+					} catch (IOException ex) {
+						// TODO Auto-generated catch block
+						ex.printStackTrace();
+					} // tell the Network that something happened
 				}
-			}
+			
 
 			nextTurn();
 			startListening();
@@ -207,22 +217,21 @@ public class GameConductor implements MouseListener {
 		
 		if (movedPiece instanceof Pawn) {
 			if (notationToCell(parts[3]).y == 0 || notationToCell(parts[3]).y == 7) {
-				Object[] options = {"Queen", "Rook", "Knight", "Bishop"};
-				int input = JOptionPane.showOptionDialog(null, "What would you like to promote your pawn to?", "Pawn Promotion", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-				switch (input) {
-				case 0:
+				System.out.println(parts[4]);
+				switch (parts[4]) {
+				case "Queen\"":
 					movedPiece.taken();
 					notationToCell(parts[3]).piece = new Queen(notationToCell(parts[3]), movedPiece.side);
 					break;
-				case 1:
+				case "Rook\"":
 					movedPiece.taken();
 					notationToCell(parts[3]).piece = new Rook(notationToCell(parts[3]), movedPiece.side);
 					break;
-				case 2:
+				case "Knight\"":
 					movedPiece.taken();
 					notationToCell(parts[3]).piece = new Knight(notationToCell(parts[3]), movedPiece.side);
 					break;
-				case 3:
+				case "Bishop\"":
 					movedPiece.taken();
 					notationToCell(parts[3]).piece = new Bishop(notationToCell(parts[3]), movedPiece.side);
 					break;						

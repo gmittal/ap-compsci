@@ -18,7 +18,7 @@ import board.Board;
 public class Network {
 	/* Populate these variables on multi-player startup */
 	public static final String HOST = "http://gautam.cc";
-	public static int GAME_PIN = 1134;
+	public static Object GAME_PIN = 1134;
 
 	private HashMap<String, Integer> ids = new HashMap<>();
 
@@ -98,7 +98,7 @@ public class Network {
 		}
 		rd.close();
 		
-		JSONArray obj = new JSONObject(result.toString()).getJSONArray(Integer.toString(GAME_PIN));
+		JSONArray obj = new JSONObject(result.toString()).getJSONArray(Integer.toString((int) GAME_PIN));
 		ArrayList<String> cloud = new ArrayList<>();
 		for (int i = 0; i < obj.length(); i++) {
 			cloud.add(obj.getString(i));
