@@ -17,7 +17,7 @@ import board.Board;
 
 public class Network {
 	/* Populate these variables on multi-player startup */
-	public static final String HOST = "http://gautam.cc";
+	public static final String HOST = "http://apcs-chess.herokuapp.com";
 	public static Object GAME_PIN = 1134;
 
 	private HashMap<String, Integer> ids = new HashMap<>();
@@ -39,7 +39,7 @@ public class Network {
 	}
 	
 	public static int startNewGame() throws IOException {
-		URL url = new URL(HOST + ":9000/new");
+		URL url = new URL(HOST + "/new");
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -48,7 +48,7 @@ public class Network {
 		rd.close();
 		
 		try {
-			URL url1 = new URL(HOST + ":9000/" + r + "/games");
+			URL url1 = new URL(HOST + "/" + r + "/games");
 			HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setDoOutput(true);
@@ -72,7 +72,7 @@ public class Network {
 		state.add(move);
 //		System.out.println(state.toString());
 
-		URL url = new URL(HOST + ":9000/" + GAME_PIN + "/games");
+		URL url = new URL(HOST + "/" + GAME_PIN + "/games");
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("POST");
 		connection.setDoOutput(true);
@@ -88,7 +88,7 @@ public class Network {
 
 	public ArrayList<String> listenForNetworkChange() throws IOException, JSONException {
 		StringBuilder result = new StringBuilder();
-		URL url = new URL(HOST + ":9000/" + GAME_PIN + "/games");
+		URL url = new URL(HOST + "/" + GAME_PIN + "/games");
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));

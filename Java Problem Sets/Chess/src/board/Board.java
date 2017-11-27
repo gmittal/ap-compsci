@@ -2,6 +2,7 @@ package board;
 
 import java.awt.Graphics;
 
+import board.Cell;
 import control.Main;
 import pieces.Bishop;
 import pieces.King;
